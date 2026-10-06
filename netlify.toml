@@ -1,0 +1,9 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+# Never cache the app shell, so new versions show up straight away
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"

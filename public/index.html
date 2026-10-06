@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>हॉटेल अक्षरा - बिलिंग</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Yatra+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mar:#7a1f1f; --mar2:#9e2b2b; --mar3:#5a1414; --sa:#f08a24; --sa2:#ffb25b;
+  --cream:#fbf5ea; --card:#ffffff; --ink:#2b1d14; --mut:#7d6b5d; --line:#eadfce;
+  --veg:#1f8a3b; --nv:#c62828; --upi:#0e7fb8; --cash:#1f8a3b; --leaf:#5aa83a;
+  --hotel:#e8730c; --hotel2:#ffb25b; --bar:#6d3fd1; --bar2:#a07bf0;
+  --sh:0 2px 10px rgba(90,20,20,.08); --sh2:0 8px 28px rgba(90,20,20,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:'Mukta','Noto Sans Devanagari','Segoe UI',system-ui,sans-serif;
+  color:var(--ink); font-size:15px;
+  background:
+    radial-gradient(900px 480px at -5% -8%, #ffd9ad 0, transparent 60%),
+    radial-gradient(800px 460px at 105% 0%, #dccfff 0, transparent 58%),
+    radial-gradient(900px 500px at 50% 115%, #cdeedd 0, transparent 60%),
+    var(--cream);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer}
+input,select{font-family:inherit;font-size:15px}
+.muted{color:var(--mut)}
+
+/* ---------- header ---------- */
+header.top{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:10px 18px;color:#fff;
+  background:linear-gradient(110deg,var(--mar3),var(--mar) 45%,var(--mar2));
+  box-shadow:0 3px 14px rgba(60,10,10,.3);border-bottom:3px solid var(--sa);
+}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:46px;height:46px;border-radius:50%;background:var(--mar3);border:3px solid var(--sa);
+  display:grid;place-items:center;flex:none}
+.hname{font-family:'Mukta','Noto Sans Devanagari',sans-serif;font-weight:800;font-size:26px;line-height:1.15;color:#ffe2bf}
+html[lang=en] .hname{font-family:'Yatra One','Mukta',serif;font-weight:400;font-size:24px;letter-spacing:.3px}
+.htag{font-size:12px;opacity:.85}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav button{border:0;background:rgba(255,255,255,.1);color:#fff;padding:8px 16px;border-radius:999px;
+  font-weight:600;font-size:15px;transition:.15s}
+nav button:hover{background:rgba(255,255,255,.2)}
+nav button.on{background:var(--sa);color:#2b1300;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.nbadge{display:inline-block;min-width:20px;padding:0 6px;margin-left:4px;border-radius:999px;background:#fff;color:var(--nv);font-size:12px;font-weight:800;line-height:20px;text-align:center}
+.nbadge:empty{display:none}
+.hright{display:flex;align-items:center;gap:10px}
+.daybox{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:5px 16px;border-radius:12px;text-align:center;line-height:1.15}
+.daybox b{display:block;font-size:20px;color:#ffe2bf}
+.daybox small{font-size:12px;opacity:.9}
+.langbtn{border:2px solid var(--sa);background:transparent;color:#fff;padding:6px 12px;border-radius:10px;font-weight:700}
+.langbtn:hover{background:var(--sa);color:#2b1300}
+
+main{padding:16px;max-width:1500px;margin:0 auto}
+
+/* ---------- billing ---------- */
+.billing{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start}
+.billing>*{min-width:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh);padding:14px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.seg{display:inline-flex;background:#f4ebdd;border-radius:12px;padding:3px}
+.seg button{border:0;background:transparent;padding:7px 14px;border-radius:9px;font-weight:600;color:var(--mut);display:flex;align-items:center;gap:6px}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.search{flex:1;min-width:180px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fffdf9;outline:none}
+.search:focus{border-color:var(--sa)}
+.cats{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 10px}
+.cats button{flex:none;border:1.5px solid var(--line);background:#fff;padding:4px 11px;border-radius:999px;font-weight:600;font-size:14px;color:var(--mar)}
+.cats button.on{background:var(--mar);border-color:var(--mar);color:#fff}
+.cats button small{opacity:.7;margin-left:4px}
+.grid-wrap{max-height:calc(100vh - 410px);min-height:240px;overflow:auto;padding-right:4px}
+.ghead{display:flex;align-items:center;gap:10px;margin:14px 0 8px;color:var(--mar);font-weight:800;font-size:17px}
+.ghead:after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--sa2),transparent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.card{background:#fffdf9;border:1.5px solid var(--line);border-radius:14px;padding:10px 11px;display:flex;flex-direction:column;gap:8px;transition:.12s;position:relative}
+.card.click{cursor:pointer}
+.card.click:hover{border-color:var(--sa);transform:translateY(-2px);box-shadow:var(--sh2)}
+.card.click:active{transform:scale(.97)}
+.ctop{display:flex;gap:7px;align-items:flex-start}
+.iname{font-weight:700;line-height:1.2;font-size:15px}
+.price{font-weight:800;color:var(--mar);font-size:17px;margin-top:auto}
+.vars{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto}
+.vars button{flex:1;min-width:52px;border:1.5px solid #f1d9bd;background:#fff6ea;border-radius:10px;padding:4px 4px;line-height:1.1;color:var(--ink)}
+.vars button:hover{background:var(--sa);border-color:var(--sa);color:#2b1300}
+.vars button small{display:block;font-size:11px;color:var(--mut)}
+.vars button:hover small{color:#2b1300}
+.vars button b{font-size:14px}
+.dot{flex:none;width:14px;height:14px;border:2px solid var(--veg);border-radius:3px;display:inline-grid;place-items:center;margin-top:3px}
+.dot:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--veg)}
+.dot.nonveg{border-color:var(--nv)}
+.dot.nonveg:after{background:var(--nv);border-radius:0;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid var(--nv);background:transparent}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#f4ebdd;color:var(--mut)}
+
+.cart-pane{position:sticky;top:86px;display:flex;flex-direction:column;gap:10px;height:calc(100vh - 172px);min-height:430px;overflow:hidden;border-top:5px solid var(--sa)}
+.cart-pane>*{flex:none}
+.cart-pane>.lines{flex:1 1 auto;min-height:0}
+.cart-pane h3{margin:0;display:flex;align-items:center;justify-content:space-between;color:var(--mar);font-size:20px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fld label{display:block;font-size:12px;color:var(--mut);font-weight:600;margin-bottom:2px}
+.fld input,.fld select{width:100%;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fffdf9;outline:none}
+.fld input:focus,.fld select:focus{border-color:var(--sa)}
+.dtrow{display:flex;gap:6px}
+.dtrow input{flex:1}
+.mini{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:0 10px;font-weight:600;color:var(--mar);white-space:nowrap}
+.mini.on{background:#e9f6ec;border-color:#bfe3c8;color:var(--veg)}
+.lines{position:relative;overflow:auto;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);padding:4px 0}
+.empty{color:var(--mut);text-align:center;padding:28px 10px}
+.empty svg{opacity:.35;display:block;margin:0 auto 6px}
+.line{padding:8px 2px;border-bottom:1px solid #f3eadc}
+.line:last-child{border-bottom:0}
+.lname{font-weight:700;line-height:1.2}
+.lname small{font-weight:600;color:var(--sa);margin-left:4px}
+.lctrl{display:flex;align-items:center;gap:6px;margin-top:5px}
+.qbtn{width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-size:18px;font-weight:700;color:var(--mar);line-height:1}
+.qbtn:hover{background:var(--mar);color:#fff;border-color:var(--mar)}
+.qty{min-width:26px;text-align:center;font-weight:800}
+.pin{width:78px;padding:5px 7px;border:1.5px solid var(--line);border-radius:8px;text-align:right;background:#fff8ec}
+.pin:focus{outline:none;border-color:var(--sa)}
+.ltot{margin-left:auto;font-weight:800;min-width:70px;text-align:right}
+.x{border:0;background:transparent;color:#b9a99a;font-size:16px;padding:2px 4px}
+.x:hover{color:var(--nv)}
+.tots{display:flex;flex-direction:column;gap:4px}
+.tr{display:flex;justify-content:space-between;align-items:center}
+.tr input{width:100px;padding:5px 8px;border:1.5px solid var(--line);border-radius:8px;text-align:right}
+.grand{background:linear-gradient(100deg,var(--mar),var(--mar2));color:#fff;border-radius:12px;padding:10px 14px;font-size:18px;font-weight:700}
+.grand b{font-size:26px;color:#ffe2bf}
+.pay{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pay button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--mut)}
+.pay button.on.cash{border-color:var(--cash);background:#e9f6ec;color:var(--cash)}
+.pay button.on.upi{border-color:var(--upi);background:#e3f3fb;color:var(--upi)}
+.acts{display:grid;grid-template-columns:1fr;gap:8px}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;font-size:16px;background:#f1e7d8;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.pri{background:linear-gradient(100deg,var(--sa),#e57412);color:#2b1300;box-shadow:0 3px 10px rgba(240,138,36,.35)}
+.btn.pri:hover{filter:brightness(1.05)}
+.btn.dark{background:var(--mar);color:#fff}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.ghost{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font-weight:600;color:var(--mar)}
+.ghost:hover{border-color:var(--mar)}
+.danger{color:var(--nv)!important}
+.fab{display:none}
+
+
+/* ---------- tables (home) ---------- */
+.tstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.tstat{border-radius:16px;padding:12px 16px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.tstat span{font-size:14px;font-weight:600;opacity:.95}
+.tstat b{display:block;font-size:30px;line-height:1.15}
+.tstat:after{content:"";position:absolute;right:-18px;top:-22px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.15)}
+.ts1{background:linear-gradient(120deg,#e4501f,#ff9a3c)}
+.ts2{background:linear-gradient(120deg,#0a5f8c,#26a6df)}
+.ts3{background:linear-gradient(120deg,#16692d,#3fbf63)}
+.runbox{margin-bottom:14px;border-top:5px solid var(--sa)}
+.runbox h3{margin:0 0 10px;color:var(--mar);font-size:19px;display:flex;align-items:center;gap:8px}
+.runlist{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:14px;padding:8px 14px;font-weight:700;color:#fff;
+  background:linear-gradient(120deg,#e4501f,#ff9a3c);box-shadow:0 3px 10px rgba(228,80,31,.3);text-align:left;line-height:1.3}
+.chip small{display:block;font-weight:600;opacity:.9;font-size:12px}
+.chip .cn{font-size:22px;font-weight:800}
+.chip:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.tcard{border-radius:18px;padding:12px 14px;min-height:122px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;
+  border:2px solid transparent;transition:.12s;font-size:14px}
+.tcard:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.tcard .tno{font-size:34px;font-weight:800;line-height:1}
+.tcard .tlab{font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;opacity:.8}
+.tcard.free{background:linear-gradient(145deg,#f3fcf5,#d9f2e0);border-color:#b4dfc0;color:#17682e}
+.tcard.on{background:linear-gradient(145deg,#ff9a3c,#e4501f);color:#fff;box-shadow:0 6px 18px rgba(228,80,31,.35)}
+.tcard .trow{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tpill{background:rgba(255,255,255,.25);border-radius:999px;padding:2px 9px;font-weight:700;font-size:13px}
+.tcard .tamt{font-size:20px;font-weight:800}
+.tcard .tmeta{font-size:12px;opacity:.92}
+
+/* ---------- order screen ---------- */
+.ohead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.otitle{font-size:26px;font-weight:800;color:var(--mar);margin-right:6px}
+.otitle span{display:inline-block;background:linear-gradient(120deg,#e4501f,#ff9a3c);color:#fff;border-radius:12px;padding:0 14px;margin-left:4px}
+.strip{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:200px;padding:2px}
+.strip .chip{flex:none;padding:5px 12px;border-radius:12px}
+.strip .chip .cn{font-size:18px}
+.strip .chip.cur{outline:3px solid var(--mar);outline-offset:1px}
+.btn.cancelT{background:#fde8e8;color:#b42318;border:1.5px solid #f5b5b0;padding:9px 16px}
+.btn.cancelT:hover{background:#fbd3d0}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dlbox{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#fffdf9}
+.dlbox h4{margin:0 0 8px;color:var(--mar)}
+.dlrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.dlrow label{display:flex;flex-direction:column;font-size:12px;font-weight:600;color:var(--mut);gap:2px}
+.dlrow input,.dlrow select,.ph select{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:15px}
+.dlbtns{display:flex;gap:8px;flex-wrap:wrap}
+.newtbl{padding:8px 10px;border:2px dashed var(--sa);border-radius:12px;background:#fff8ec;font-weight:700;color:#a4520a}
+.secsw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.secsw button{border:0;border-radius:14px;padding:12px;font-weight:800;font-size:18px;color:#fff;opacity:.5;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.secsw button.hotel{background:linear-gradient(110deg,#e4501f,#ffa043)}
+.secsw button.bar{background:linear-gradient(110deg,#5a2fc0,#a47cf3)}
+.secsw button.on{opacity:1;box-shadow:0 6px 16px rgba(0,0,0,.25);transform:translateY(-1px)}
+.menu.sec-hotel{border-top:5px solid var(--hotel)}
+.menu.sec-bar{border-top:5px solid var(--bar)}
+.menu.sec-bar .cats button.on{background:var(--bar);border-color:var(--bar)}
+.menu.sec-bar .cats button{color:var(--bar)}
+.menu.sec-bar .cats button.on{color:#fff}
+.menu.sec-bar .ghead{color:var(--bar)}
+.menu.sec-bar .price,.menu.sec-bar .vars b{color:var(--bar)}
+.menu.sec-bar .card.click:hover{border-color:var(--bar2)}
+.menu.sec-bar .vars button{background:#f4efff;border-color:#ddd0fb}
+.menu.sec-bar .vars button:hover{background:var(--bar);border-color:var(--bar);color:#fff}
+.menu.sec-bar .vars button:hover small,.menu.sec-bar .vars button:hover b{color:#fff}
+.lsec{display:flex;justify-content:space-between;align-items:center;margin:8px 0 2px;padding:5px 10px;border-radius:10px;color:#fff;font-weight:800;font-size:14px}
+.lsec.hotel{background:linear-gradient(110deg,#e4501f,#ffa043)}
+.lsec.bar{background:linear-gradient(110deg,#5a2fc0,#a47cf3)}
+.line.flash{animation:flash .8s ease-out}
+@keyframes flash{from{background:#fff0c9}to{background:transparent}}
+.cinput{width:100%;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fffdf9;outline:none}
+.cinput:focus{border-color:var(--sa)}
+.empty .btn{margin-top:10px}
+
+/* ---------- checkout ---------- */
+.cosec{border-radius:14px;overflow:hidden;border:1.5px solid var(--line);margin-bottom:10px}
+.cosec .lsec{margin:0;border-radius:0;font-size:15px}
+.cosec .cob{padding:8px 12px}
+.corow{display:flex;justify-content:space-between;gap:8px;padding:2px 0;font-size:14px}
+.corow.sm{color:var(--mut);font-size:13px}
+.cosec input{width:110px;padding:5px 8px;border:1.5px solid var(--line);border-radius:8px;text-align:right}
+.cosec .net{font-weight:800;font-size:17px;border-top:1px dashed var(--line);margin-top:4px;padding-top:4px}
+.note{background:#fff6e0;border:1px solid #f5d98e;color:#8a5a00;border-radius:10px;padding:7px 10px;font-size:13px;margin-bottom:10px}
+
+/* ---------- day bills (reports) ---------- */
+.secbill{border-radius:16px;overflow:hidden;border:1.5px solid var(--line);background:#fff;box-shadow:var(--sh)}
+.secbill .sbh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;color:#fff}
+.secbill.hotel .sbh{background:linear-gradient(110deg,#e4501f,#ffa043)}
+.secbill.bar .sbh{background:linear-gradient(110deg,#5a2fc0,#a47cf3)}
+.sbh h3{margin:0;font-size:19px;margin-right:auto}
+.sbh .btn{background:#fff;color:#2b1d14;padding:8px 14px;font-size:15px}
+.secbill .sbb{padding:6px 14px 14px}
+.sbtot{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:800;border-top:2px solid var(--line);padding-top:8px;margin-top:6px}
+.secbill.hotel .sbtot b{color:#c2410c}.secbill.bar .sbtot b{color:var(--bar)}
+.sbmini{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin:8px 0 2px}
+.sbscroll{max-height:340px;overflow:auto}
+.seg2{display:inline-flex;background:#f4ebdd;border-radius:12px;padding:3px}
+.seg2 button{border:0;background:transparent;padding:6px 12px;border-radius:9px;font-weight:700;color:var(--mut)}
+.seg2 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.sbadge{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;color:#fff}
+.sbadge.hotel{background:#e4701f}.sbadge.bar{background:var(--bar)}
+
+/* ---------- reports ---------- */
+.rep{display:grid;gap:16px}
+.ph{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.ph h2{margin:0;color:var(--mar);font-size:21px;margin-right:auto}
+.ph input,.ph select{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fffdf9}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{border-radius:14px;padding:14px 16px;color:#fff;position:relative;overflow:hidden}
+.stat span{font-size:14px;opacity:.9;font-weight:600}
+.stat b{display:block;font-size:28px;line-height:1.2;margin-top:4px}
+.stat:after{content:"";position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
+.s1{background:linear-gradient(120deg,var(--mar3),var(--mar2))}
+.s2{background:linear-gradient(120deg,#c2410c,#ffa043)}
+.s3{background:linear-gradient(120deg,#4c22b0,#a47cf3)}
+.s4{background:linear-gradient(120deg,#0a5f8c,#26a6df)}
+table.tbl{width:100%;border-collapse:collapse;margin-top:12px}
+.tbl th{text-align:left;font-size:13px;color:var(--mut);font-weight:700;padding:8px;border-bottom:2px solid var(--line);background:#fbf5ea}
+.tbl td{padding:8px;border-bottom:1px solid #f3eadc;vertical-align:middle}
+.tbl tr:hover td{background:#fffaf2}
+.tbl .r{text-align:right}
+.mbar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--sa),var(--mar2));min-width:3px}
+.pbadge{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px}
+.pbadge.cash{background:#e9f6ec;color:var(--cash)}
+.pbadge.upi{background:#e3f3fb;color:var(--upi)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tblwrap{overflow-x:auto}
+
+/* ---------- admin ---------- */
+.login{max-width:380px;margin:40px auto;text-align:center;display:flex;flex-direction:column;gap:12px}
+.login input{padding:12px;border:1.5px solid var(--line);border-radius:12px;font-size:20px;text-align:center;letter-spacing:6px}
+.atabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.atabs button{border:1.5px solid var(--line);background:#fff;padding:9px 18px;border-radius:12px;font-weight:700;color:var(--mar)}
+.atabs button.on{background:var(--mar);color:#fff;border-color:var(--mar)}
+.atabs .ghost{margin-left:auto}
+.tbl input.ci{width:100%;padding:6px 8px;border:1.5px solid var(--line);border-radius:8px}
+.switch{position:relative;width:42px;height:24px;display:inline-block}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;background:#d8cbbb;border-radius:999px;transition:.2s;cursor:pointer}
+.switch span:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked+span{background:var(--veg)}
+.switch input:checked+span:before{transform:translateX(18px)}
+.icon{border:0;background:transparent;padding:4px 8px;border-radius:8px;font-weight:700;color:var(--mar)}
+.icon:hover{background:#f4ebdd}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form label{display:flex;flex-direction:column;font-size:13px;font-weight:600;color:var(--mut);gap:3px}
+.form input,.form select,.form textarea{padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;color:var(--ink);background:#fffdf9;font-family:inherit}
+.form .full{grid-column:1/-1}
+.chk{flex-direction:row!important;align-items:center;gap:8px!important}
+.vrow{display:grid;grid-template-columns:1fr 1fr 110px 36px;gap:6px;margin-bottom:6px}
+.vrow input{padding:8px;border:1.5px solid var(--line);border-radius:9px;min-width:0}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.presets button{border:1.5px dashed var(--sa);background:#fff8ec;border-radius:9px;padding:4px 10px;font-weight:600;color:#a4520a}
+
+/* ---------- app lock ---------- */
+#lock{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:16px;
+  background:linear-gradient(135deg,var(--mar3),var(--mar) 55%,#b5481a)}
+#lock.show{display:grid}
+.lockbox{background:#fff;border-radius:20px;padding:26px 24px;width:100%;max-width:380px;text-align:center;border-top:6px solid var(--sa);box-shadow:0 20px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:12px}
+.lockbox h1{margin:0;font-size:28px;color:var(--mar);font-weight:800;line-height:1.2}
+.lockbox p{margin:0;color:var(--mut);font-size:14px}
+.lockbox input{padding:12px;border:1.5px solid var(--line);border-radius:12px;font-size:18px;text-align:center}
+.lockbox input:focus{outline:none;border-color:var(--sa)}
+
+/* ---------- modal & toast ---------- */
+#modal{position:fixed;inset:0;background:rgba(40,15,10,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
+#modal.show{display:flex}
+.mbox{background:#fff;border-radius:18px;max-width:640px;width:100%;max-height:92vh;overflow:auto;padding:18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);border-top:5px solid var(--sa)}
+.mbox h3{margin:0 0 12px;color:var(--mar);font-size:21px}
+.mbox h4{margin:14px 0 6px;color:var(--mar)}
+.mact{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:#21130b;color:#fff;padding:11px 20px;border-radius:12px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+#toast.err{background:var(--nv)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){ .billing{grid-template-columns:minmax(0,1fr) 360px} .stats{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:860px){
+  header.top{padding:8px 12px;gap:8px}
+  .hname{font-size:20px}
+  nav{order:3;width:100%;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  nav button{padding:7px 8px;font-size:14px}
+  .hright{margin-left:auto}
+  .daybox{padding:3px 10px}.daybox b{font-size:16px}
+  main{padding:10px}
+  .billing{grid-template-columns:minmax(0,1fr)}
+  .grid-wrap{max-height:none}
+  .cart-pane{position:static;height:auto;min-height:0;overflow:visible}
+  .cart-pane>.lines{max-height:none}
+  .tstats{grid-template-columns:1fr 1fr 1fr}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
+  .twocol,.form,.dl{grid-template-columns:1fr}
+  .fab{display:flex;position:fixed;right:14px;bottom:14px;z-index:30;border:0;border-radius:999px;padding:12px 18px;font-weight:800;font-size:16px;background:var(--mar);color:#fff;box-shadow:var(--sh2);gap:8px;align-items:center}
+  .fab.hide{display:none}
+  .vrow{grid-template-columns:1fr 1fr 80px 32px}
+}
+
+/* ---------- print (receipt) ---------- */
+#printArea{display:none}
+.rcpt{font-family:'Mukta','Noto Sans Devanagari',Arial,sans-serif;color:#000;font-size:12px;line-height:1.3;margin:0 auto}
+.rcpt .rh{text-align:center;font-size:19px;font-weight:800}
+.rcpt .rt{text-align:center;font-size:11px}
+.rcpt .rc{text-align:center;font-size:11px}
+.rcpt .rl{border-top:1px dashed #000;margin:5px 0}
+.rcpt .rm{display:flex;justify-content:space-between;gap:6px}
+.rcpt table{width:100%;border-collapse:collapse}
+.rcpt th{font-size:11px;text-align:left;border-bottom:1px solid #000;padding:2px 0}
+.rcpt td{padding:2px 0;vertical-align:top}
+.rcpt .c{text-align:center}.rcpt .r{text-align:right}
+.rcpt td span{font-size:10px}
+.rcpt .rtot{display:flex;justify-content:space-between;font-size:16px;font-weight:800;border-top:1px solid #000;border-bottom:1px solid #000;padding:3px 0;margin-top:3px}
+.rcpt .rf{text-align:center;font-weight:700;margin-top:4px}
+.rcpt .rs{text-align:center;font-size:14px;font-weight:800;border:1px solid #000;border-radius:4px;padding:1px 0;margin:4px 0}
+.rcpt+.rcpt{page-break-before:always;break-before:page}
+@media print{
+  body{background:#fff!important}
+  body>*:not(#printArea){display:none!important}
+  #printArea{display:block!important}
+}
+</style>
+<style id="pageStyle">@page{size:80mm auto;margin:2mm}.rcpt{width:76mm}</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffe2bf" stroke-width="2" stroke-linecap="round"><path d="M4 4l16 16"/><path d="M20 4L4 20"/><path d="M15 3c2.5 1 4.5 3 5.5 5.5"/><circle cx="6" cy="5.5" r="2.2"/></svg>
+    </div>
+    <div><div class="hname" id="hName"></div><div class="htag" id="hTag"></div></div>
+  </div>
+  <nav id="nav"></nav>
+  <div class="hright">
+    <div class="daybox" id="dayName"></div>
+    <button class="langbtn" id="langBtn" onclick="toggleLang()"></button>
+    <button class="langbtn" id="lockBtn" onclick="appLogout()" title="Logout">🔒</button>
+  </div>
+</header>
+<main id="view"></main>
+<div id="lock"></div>
+<button class="fab hide" id="fab" onclick="document.querySelector('.cart-pane').scrollIntoView({behavior:'smooth'})"></button>
+<div id="printArea"></div>
+<div id="modal" onclick="if(event.target===this)closeModal()"><div class="mbox" id="mbox"></div></div>
+<div id="toast"></div>
+
+<script>
+/* =================== TRANSLATIONS =================== */
+const T={
+mr:{billing:'बिलिंग',reports:'उत्पन्न अहवाल',bills:'बिल यादी',admin:'ॲडमिन',all:'सर्व',veg:'व्हेज',nonveg:'नॉन-व्हेज',
+search:'पदार्थ शोधा...',allCats:'सर्व विभाग',cart:'चालू बिल',empty:'बिलात अजून काही नाही.<br>मेनूमधून पदार्थ निवडा.',
+qty:'नग',price:'दर',amount:'रक्कम',subtotal:'एकूण',discount:'सूट (₹)',total:'एकूण देय',payment:'पेमेंट',cash:'रोख',upi:'UPI / ऑनलाइन',
+table:'टेबल नं.',customer:'ग्राहकाचे नाव',datetime:'दिनांक व वेळ',now:'आत्ता',autoOn:'ऑटो',saveprint:'सेव्ह व प्रिंट',save:'सेव्ह',
+clear:'रद्द',billno:'बिल क्र.',date:'दिनांक',time:'वेळ',item:'पदार्थ',items:'पदार्थ',todaySales:'आजचे उत्पन्न',
+daily:'दैनिक उत्पन्न',monthly:'मासिक उत्पन्न',revenue:'एकूण उत्पन्न',billcount:'एकूण बिले',topitems:'सर्वाधिक विक्री झालेले पदार्थ',
+nodata:'या कालावधीत कोणतीही माहिती नाही',exportcsv:'⬇ एक्सेल (CSV)',reprint:'🖨 प्रिंट',delete:'हटवा',edit:'बदला',cancel:'रद्द',
+saveBtn:'सेव्ह करा',login:'लॉगिन',logout:'लॉगआउट',pin:'ॲडमिन पिन',pinHint:'डिफॉल्ट पिन: 1234 — सेटिंग्जमध्ये बदला',
+wrongpin:'चुकीचा पिन',menuitems:'मेनू पदार्थ',categories:'विभाग',settings:'सेटिंग्ज',additem:'+ नवीन पदार्थ',addcat:'+ नवीन विभाग',
+name_mr:'नाव (मराठी)',name_en:'नाव (English)',type:'प्रकार',sort:'क्रम',category:'विभाग',variants:'साईज व दर',addvariant:'+ साईज जोडा',
+label_mr:'साईज (मराठी)',label_en:'साईज (English)',active:'चालू',saved:'सेव्ह झाले ✓',deleted:'हटवले',confirmDel:'नक्की हटवायचे?',
+confirmCatDel:'या विभागातील सर्व पदार्थही हटवले जातील. नक्की हटवायचे?',hotel_mr:'हॉटेलचे नाव (मराठी)',hotel_en:'हॉटेलचे नाव (English)',
+tag_mr:'टॅगलाइन (मराठी)',tag_en:'टॅगलाइन (English)',addr_mr:'पत्ता (मराठी)',addr_en:'पत्ता (English)',phone:'फोन नं.',gstin:'GSTIN (असल्यास)',
+footer_mr:'बिलाखालील संदेश (मराठी)',footer_en:'बिलाखालील संदेश (English)',paper:'प्रिंटर पेपर साईज',newpin:'नवीन पिन (बदलायचा असल्यास)',
+billSaved:'बिल सेव्ह झाले',addSomething:'आधी बिलात पदार्थ जोडा',single:'एकच दर',hf:'हाफ / फुल',phf:'प्लेट / हाफ / फुल',sb:'छोटी / मोठी',
+actions:'कृती',noItems:'पदार्थ सापडले नाहीत',nameRequired:'नाव आवश्यक आहे',langBtn:'English',a4:'A4 पेपर',confirmClear:'चालू बिल रद्द करायचे?',
+printTip:'टीप: प्रिंट विंडोमध्ये तुमचा थर्मल प्रिंटर निवडा. प्रत्येक वेळी विंडो टाळण्यासाठी Chrome "--kiosk-printing" ने उघडा.',
+day:'दिवस',plate:'प्लेट',phoneShort:'फोन',inactive:'बंद',contact:'संपर्क',grand:'एकूण देय रक्कम',signIn:'ॲडमिन लॉगिन',
+itemsN:'पदार्थ',viewBills:'बिले पहा',settingsSaved:'सेटिंग्ज सेव्ह झाल्या',pinChanged:'पिन बदलला',
+tables:'टेबल्स',running:'चालू टेबल्स',runningTables:'चालू टेबल',runningAmt:'चालू बिलांची रक्कम',freeTables:'रिकामे टेबल',tableWord:'टेबल',free:'रिकामा',
+noRunning:'सध्या कोणताही टेबल चालू नाही. खालून टेबल निवडा.',sec_hotel:'हॉटेल',sec_bar:'बियर बार',backTables:'← टेबल्स',openOther:'दुसरा टेबल उघडा',
+billPrint:'बिल करा',clearTable:'टेबल रिकामा करा',confirmClearTable:'या टेबलवरील सर्व ऑर्डर रद्द करायची?',min:'मि.',hr:'तास',
+menuEmptyBar:'बार मेनू अजून रिकामा आहे.<br>ॲडमिनमध्ये पदार्थ व दर जोडा.',goAdmin:'ॲडमिनकडे जा',finalBill:'अंतिम बिल',
+sepBills:'हॉटेल व बारची बिले वेगवेगळी तयार होतील.',dayBill:'आजचे एकत्रित बिल',printDay:'प्रिंट',viewDay:'हा दिवस पहा',
+billTitle_hotel:'हॉटेल बिल',billTitle_bar:'बियर बार बिल',dayTitle_hotel:'हॉटेल - दैनिक एकत्रित बिल',dayTitle_bar:'बियर बार - दैनिक एकत्रित बिल',
+table_count:'टेबल संख्या',sectionW:'सेक्शन',
+cancelTable:'टेबल रद्द करा',confirmCancelTable:'हा टेबल रद्द करायचा? या टेबलवरील सर्व ऑर्डर हटवली जाईल.',tableCancelled:'टेबल रद्द केला',
+download:'बिले डाउनलोड करा',yearly:'वार्षिक बिल',yearW:'वर्ष',monthToMonth:'महिना ते महिना',dlFrom:'पासून',dlTo:'पर्यंत',
+dlBills:'सर्व बिले (Excel)',dlSummary:'महिनावार सारांश (Excel)',wrongYear:'योग्य वर्ष टाका',pickMonths:'दोन्ही महिने निवडा',
+lockTitle:'लॉगिन',lockHint:'हॉटेल अक्षरा बिलिंग - पासवर्ड टाका',setupHint:'पहिल्यांदा वापरत आहात. स्वतःचा पासवर्ड ठरवा (किमान ६ अक्षरे).',pw:'पासवर्ड',pw2:'पासवर्ड पुन्हा टाका',pwMismatch:'दोन्ही पासवर्ड जुळत नाहीत',setPw:'पासवर्ड सेट करा',loginBtn:'लॉगिन',
+newpw:'नवीन ॲप पासवर्ड (बदलायचा असल्यास)',pwChanged:'पासवर्ड बदलला',importTitle:'जुना डेटा आयात करा',importHelp:'जुन्या Python आवृत्तीचा डेटा (akshara-export.json) येथे आयात करा. यामुळे सध्याचा मेनू व बिले बदलली जातील.',importBtn:'आयात करा',importConfirm:'सध्याचा मेनू व सर्व बिले बदलली जातील. नक्की आयात करायचे?',importDone:'आयात पूर्ण',pickFile:'आधी फाईल निवडा',badFile:'ही फाईल योग्य नाही'},
+en:{billing:'Billing',reports:'Revenue Reports',bills:'Bill History',admin:'Admin',all:'All',veg:'Veg',nonveg:'Non-Veg',
+search:'Search items...',allCats:'All Categories',cart:'Current Bill',empty:'Bill is empty.<br>Tap items from the menu.',
+qty:'Qty',price:'Rate',amount:'Amount',subtotal:'Subtotal',discount:'Discount (₹)',total:'Total Payable',payment:'Payment',cash:'Cash',upi:'UPI / Online',
+table:'Table No.',customer:'Customer Name',datetime:'Date & Time',now:'Now',autoOn:'Auto',saveprint:'Save & Print',save:'Save',
+clear:'Clear',billno:'Bill No.',date:'Date',time:'Time',item:'Item',items:'Items',todaySales:"Today's Sales",
+daily:'Daily Revenue',monthly:'Monthly Revenue',revenue:'Total Revenue',billcount:'Total Bills',topitems:'Top Selling Items',
+nodata:'No data for this period',exportcsv:'⬇ Excel (CSV)',reprint:'🖨 Print',delete:'Delete',edit:'Edit',cancel:'Cancel',
+saveBtn:'Save',login:'Login',logout:'Logout',pin:'Admin PIN',pinHint:'Default PIN: 1234 — change it in Settings',
+wrongpin:'Wrong PIN',menuitems:'Menu Items',categories:'Categories',settings:'Settings',additem:'+ New Item',addcat:'+ New Category',
+name_mr:'Name (Marathi)',name_en:'Name (English)',type:'Type',sort:'Order',category:'Category',variants:'Sizes & Prices',addvariant:'+ Add Size',
+label_mr:'Size (Marathi)',label_en:'Size (English)',active:'Active',saved:'Saved ✓',deleted:'Deleted',confirmDel:'Delete this?',
+confirmCatDel:'All items in this category will also be deleted. Continue?',hotel_mr:'Hotel Name (Marathi)',hotel_en:'Hotel Name (English)',
+tag_mr:'Tagline (Marathi)',tag_en:'Tagline (English)',addr_mr:'Address (Marathi)',addr_en:'Address (English)',phone:'Phone',gstin:'GSTIN (optional)',
+footer_mr:'Bill Footer (Marathi)',footer_en:'Bill Footer (English)',paper:'Printer Paper Size',newpin:'New PIN (only if changing)',
+billSaved:'Bill saved',addSomething:'Add items to the bill first',single:'Single price',hf:'Half / Full',phf:'Plate / Half / Full',sb:'Small / Big',
+actions:'Actions',noItems:'No items found',nameRequired:'Name is required',langBtn:'मराठी',a4:'A4 paper',confirmClear:'Clear the current bill?',
+printTip:'Tip: choose your thermal printer in the print window. To skip the window every time, start Chrome with "--kiosk-printing".',
+day:'Day',plate:'Plate',phoneShort:'Ph',inactive:'Off',contact:'Contact',grand:'Grand Total',signIn:'Admin Login',
+itemsN:'items',viewBills:'View bills',settingsSaved:'Settings saved',pinChanged:'PIN changed',
+tables:'Tables',running:'Running Tables',runningTables:'Running Tables',runningAmt:'Running Bills Total',freeTables:'Free Tables',tableWord:'Table',free:'Free',
+noRunning:'No table is running right now. Pick a table below.',sec_hotel:'Hotel',sec_bar:'Beer Bar',backTables:'← Tables',openOther:'Open another table',
+billPrint:'Make Bill',clearTable:'Clear table',confirmClearTable:'Cancel the whole order on this table?',min:'min',hr:'hr',
+menuEmptyBar:'Bar menu is empty.<br>Add items and prices in Admin.',goAdmin:'Go to Admin',finalBill:'Final Bill',
+sepBills:'Separate bills will be made for Hotel and Bar.',dayBill:"Today's Combined Bill",printDay:'Print',viewDay:'View this day',
+billTitle_hotel:'HOTEL BILL',billTitle_bar:'BEER BAR BILL',dayTitle_hotel:'HOTEL - DAY BILL',dayTitle_bar:'BEER BAR - DAY BILL',
+table_count:'Number of tables',sectionW:'Section',
+cancelTable:'Cancel Table',confirmCancelTable:'Cancel this table? The whole order on it will be removed.',tableCancelled:'Table cancelled',
+download:'Download Bills',yearly:'Yearly bill',yearW:'Year',monthToMonth:'Month to month',dlFrom:'From',dlTo:'To',
+dlBills:'All bills (Excel)',dlSummary:'Month-wise summary (Excel)',wrongYear:'Enter a valid year',pickMonths:'Pick both months',
+lockTitle:'Login',lockHint:'Hotel Akshara Billing - enter password',setupHint:'First time here. Choose your own password (at least 6 characters).',pw:'Password',pw2:'Repeat password',pwMismatch:'Passwords do not match',setPw:'Set password',loginBtn:'Login',
+newpw:'New app password (only if changing)',pwChanged:'Password changed',importTitle:'Import old data',importHelp:'Import the data of the old Python version (akshara-export.json). This replaces the current menu and all bills.',importBtn:'Import',importConfirm:'The current menu and ALL bills will be replaced. Import now?',importDone:'Import complete',pickFile:'Choose a file first',badFile:'This file is not valid'}
+};
+const DAYS={mr:['रविवार','सोमवार','मंगळवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']};
+const MONTHS={mr:['जानेवारी','फेब्रुवारी','मार्च','एप्रिल','मे','जून','जुलै','ऑगस्ट','सप्टेंबर','ऑक्टोबर','नोव्हेंबर','डिसेंबर'],
+en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
+
+/* =================== STATE =================== */
+let LANG='mr'; try{LANG=localStorage.getItem('ak_lang')||'mr'}catch(e){}
+let PIN=''; try{PIN=sessionStorage.getItem('ak_pin')||''}catch(e){}
+let MENU={categories:[],items:[]}, SETTINGS={};
+let VIEW='tables', TABLE='', SEC='hotel', FILTER='all', CAT=0, Q='';
+let ATAB='menuitems', ACAT=0, ASEC='all', AQ='', EDIT_VARS=[];
+let BDATE='', BSEC='all', BILLS=[], SAVING=false, DAYREP=null;
+
+/* =================== HELPERS =================== */
+const $=id=>document.getElementById(id);
+function t(k){return (T[LANG]&&T[LANG][k]!==undefined)?T[LANG][k]:(T.en[k]!==undefined?T.en[k]:k)}
+const DEV='०१२३४५६७८९';
+function n(x){x=String(x??'');return LANG==='mr'?x.replace(/[0-9]/g,d=>DEV[+d]):x}
+function fmt(v){v=Number(v)||0;return v.toLocaleString('en-IN',{maximumFractionDigits:2})}
+function money(v){return '₹'+n(fmt(v))}
+function nm(o){return LANG==='mr'?(o.name_mr||o.name_en):(o.name_en||o.name_mr)}
+function vl(v){return LANG==='mr'?(v.mr||v.en):(v.en||v.mr)}
+function lv(l){return LANG==='mr'?(l.vmr||l.ven):(l.ven||l.vmr)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function pad(x){return String(x).padStart(2,'0')}
+function todayStr(d){d=d||new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function monthStr(d){d=d||new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)}
+function toLocalInput(d){return todayStr(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes())}
+function parseDT(s){const m=/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/.exec(s||'');return m?new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]):new Date()}
+function fmtTime(d){let h=d.getHours(),ap=h>=12?(LANG==='mr'?'PM':'PM'):'AM';h=h%12||12;return n(h+':'+pad(d.getMinutes()))+' '+ap}
+function fmtDate(d){return n(pad(d.getDate()))+' '+MONTHS[LANG][d.getMonth()]+' '+n(d.getFullYear())}
+function fmtDT(d){return fmtDate(d)+', '+fmtTime(d)}
+function fmtDay(s){const d=parseDT(s+' 00:00');return n(pad(d.getDate()))+' '+MONTHS[LANG][d.getMonth()]+' • '+DAYS[LANG][d.getDay()]}
+function catName(id){const c=MENU.categories.find(c=>c.id===id);return c?nm(c):'-'}
+function toast(msg,err){const el=$('toast');el.textContent=msg;el.className='show'+(err?' err':'');clearTimeout(el._t);el._t=setTimeout(()=>el.className='',2600)}
+function openModal(html){$('mbox').innerHTML=html;$('modal').classList.add('show')}
+function closeModal(){$('modal').classList.remove('show')}
+
+let TOKEN='';try{TOKEN=localStorage.getItem('ak_tok')||''}catch(e){}
+function setToken(tk){TOKEN=tk||'';try{tk?localStorage.setItem('ak_tok',tk):localStorage.removeItem('ak_tok')}catch(e){}}
+async function api(path,method,body){
+  const h={'Content-Type':'application/json','X-Admin-Pin':PIN};if(TOKEN)h.Authorization='Bearer '+TOKEN;
+  const r=await fetch(path,{method:method||'GET',headers:h,body:body?JSON.stringify(body):undefined});
+  let j={};try{j=await r.json()}catch(e){}
+  if(r.status===401&&j.auth){setToken('');showLock();throw new Error(j.error||'Login required')}
+  if(r.status===401&&PIN&&path!=='/api/login'){PIN='';try{sessionStorage.removeItem('ak_pin')}catch(e){}}
+  if(!r.ok)throw new Error(j.error||('Error '+r.status));
+  return j;
+}
+async function loadAll(){
+  const [m,s]=await Promise.all([api('/api/menu'),api('/api/settings')]);
+  MENU=m;SETTINGS=s;
+}
+
+/* =================== APP LOCK =================== */
+let LOCKING=false;
+async function showLock(){
+  if(LOCKING)return;LOCKING=true;
+  let setup=false;try{setup=(await (await fetch('/api/auth/status')).json()).setup}catch(e){}
+  $('lock').innerHTML=`<div class="lockbox"><h1>${esc(SETTINGS['hotel_'+LANG]||'हॉटेल अक्षरा')}</h1>
+    <p>${setup?t('setupHint'):t('lockHint')}</p>
+    <input type="password" id="lkPw" placeholder="${esc(t('pw'))}" autocomplete="${setup?'new-password':'current-password'}" onkeydown="if(event.key==='Enter')doLock(${setup})">
+    ${setup?`<input type="password" id="lkPw2" placeholder="${esc(t('pw2'))}" autocomplete="new-password" onkeydown="if(event.key==='Enter')doLock(true)">`:''}
+    <button class="btn pri" onclick="doLock(${setup})">${setup?t('setPw'):'🔓 '+t('loginBtn')}</button></div>`;
+  $('lock').classList.add('show');setTimeout(()=>$('lkPw')&&$('lkPw').focus(),50);
+}
+async function doLock(setup){
+  const pw=$('lkPw').value;
+  if(setup&&pw!==$('lkPw2').value)return toast(t('pwMismatch'),true);
+  try{
+    const r=await fetch(setup?'/api/auth/setup':'/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    const j=await r.json();if(!r.ok)throw new Error(j.error||('Error '+r.status));
+    setToken(j.token);LOCKING=false;$('lock').classList.remove('show');$('lock').innerHTML='';boot();
+  }catch(e){toast(e.message,true)}
+}
+function appLogout(){setToken('');PIN='';try{sessionStorage.removeItem('ak_pin')}catch(e){};ORD={};ORDSIG='';showLock()}
+
+/* =================== SHELL =================== */
+const SECTIONS=['hotel','bar'];
+function secIcon(s){return s==='bar'?'🍺':'🍽'}
+function setHtml(el,h){if(el&&el._h!==h){el.innerHTML=h;el._h=h}}
+function tickDay(){
+  const d=new Date();
+  setHtml($('dayName'),'<b>'+DAYS[LANG][d.getDay()]+'</b><small>'+fmtDate(d)+'</small>');
+}
+function render(){
+  document.documentElement.lang=LANG;
+  document.title=(SETTINGS['hotel_'+LANG]||'Hotel Akshara')+' - '+t('billing');
+  $('hName').textContent=SETTINGS['hotel_'+LANG]||SETTINGS.hotel_mr||'';
+  $('hTag').textContent=SETTINGS['tag_'+LANG]||'';
+  $('langBtn').textContent='🌐 '+t('langBtn');
+  $('nav').innerHTML=['tables','reports','bills','admin'].map(v=>{
+    const ic={tables:'🍽',reports:'📊',bills:'📋',admin:'⚙️'}[v];
+    const on=VIEW===v||(v==='tables'&&VIEW==='order');
+    return `<button class="${on?'on':''}" onclick="go('${v}')">${ic} ${t(v)}${v==='tables'?'<span class="nbadge" id="navCnt"></span>':''}</button>`}).join('');
+  $('fab').classList.add('hide');
+  if(VIEW==='tables')viewTables();
+  else if(VIEW==='order')viewOrder();
+  else if(VIEW==='reports')viewReports();
+  else if(VIEW==='bills')viewBills();
+  else viewAdmin();
+  $('dayName')._h=null;tickDay();updateNavBadge();
+}
+function go(v){VIEW=v;render();window.scrollTo(0,0)}
+function toggleLang(){LANG=LANG==='mr'?'en':'mr';try{localStorage.setItem('ak_lang',LANG)}catch(e){};render()}
+
+/* =================== OPEN TABLE ORDERS =================== */
+let ORD={}, ORDSIG='';
+const DIRTY=new Set();let FLUSHING=null;
+function nowStr(){const d=new Date();return todayStr(d)+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())}
+function curOrder(){return ORD[TABLE]||(ORD[TABLE]={table_no:TABLE,customer:'',items:[],created_at:nowStr()})}
+function osum(o,s){return o.items.reduce((a,l)=>a+((!s||l.section===s)?l.price*l.qty:0),0)}
+function ocount(o){return o.items.reduce((a,l)=>a+l.qty,0)}
+function runningOrders(){
+  return Object.values(ORD).filter(o=>o.items.length)
+    .sort((a,b)=>a.created_at<b.created_at?-1:a.created_at>b.created_at?1:(+a.table_no)-(+b.table_no));
+}
+function tableCount(){
+  const mx=Math.max(0,...runningOrders().map(o=>+o.table_no||0));
+  return Math.max(+SETTINGS.table_count||15,mx);
+}
+function elapsed(o){
+  const m=Math.max(0,Math.floor((Date.now()-parseDT(o.created_at))/60000));
+  return m<60?n(m)+' '+t('min'):n(Math.floor(m/60))+' '+t('hr')+' '+n(m%60)+' '+t('min');
+}
+function updateNavBadge(){const e=$('navCnt');if(e)e.textContent=runningOrders().length?n(runningOrders().length):''}
+function persist(tn){DIRTY.add(tn);if(!FLUSHING)FLUSHING=flush()}
+async function flush(){
+  await 0;
+  try{
+    while(DIRTY.size){
+      const tn=DIRTY.values().next().value;DIRTY.delete(tn);
+      const o=ORD[tn];if(!o)continue;
+      try{await api('/api/orders/'+encodeURIComponent(tn),'PUT',{customer:o.customer,items:o.items})}
+      catch(e){toast(e.message,true)}
+    }
+  }finally{FLUSHING=null}
+}
+async function flushNow(){while(FLUSHING)await FLUSHING}
+async function pollOrders(){
+  if(FLUSHING||DIRTY.size)return;
+  try{
+    const list=await api('/api/orders');
+    const sig=JSON.stringify(list.map(o=>[o.table_no,o.updated_at,o.total,o.count]));
+    if(FLUSHING||DIRTY.size||sig===ORDSIG)return;
+    ORDSIG=sig;
+    const m={};list.forEach(o=>m[o.table_no]=o);
+    if(VIEW==='order'&&ORD[TABLE])m[TABLE]=ORD[TABLE];   // never overwrite the table being edited
+    ORD=m;refreshOrdUI();
+  }catch(e){}
+}
+function refreshOrdUI(){
+  updateNavBadge();
+  if(VIEW==='tables')renderTablesBody();
+  else if(VIEW==='order')renderStrip();
+}
+
+/* =================== TABLES (home) =================== */
+function viewTables(){$('view').innerHTML='<div id="tablesBox"></div>';renderTablesBody()}
+function renderTablesBody(){
+  const box=$('tablesBox');if(!box)return;
+  const run=runningOrders(),N=tableCount();
+  const amt=run.reduce((s,o)=>s+osum(o),0);
+  let h=`<div class="tstats">
+    <div class="tstat ts1"><span>🔥 ${t('runningTables')}</span><b>${n(run.length)}</b></div>
+    <div class="tstat ts2"><span>💰 ${t('runningAmt')}</span><b>${money(amt)}</b></div>
+    <div class="tstat ts3"><span>✅ ${t('freeTables')}</span><b>${n(Math.max(0,N-run.length))}</b></div></div>
+  <section class="panel runbox"><h3>🔥 ${t('running')}</h3>`+
+  (run.length?`<div class="runlist">${run.map(o=>`<button class="chip" onclick="openTable('${esc(o.table_no)}')"><span class="cn">${n(esc(o.table_no))}</span><span>${money(osum(o))}<small>⏱ ${elapsed(o)} • ${n(ocount(o))} ${t('itemsN')}</small></span></button>`).join('')}</div>`
+    :`<p class="muted" style="margin:0">${t('noRunning')}</p>`)+`</section><div class="tgrid">`;
+  for(let i=1;i<=N;i++){
+    const o=ORD[i]&&ORD[i].items.length?ORD[i]:null;
+    if(o){const hs=osum(o,'hotel'),bs=osum(o,'bar');
+      h+=`<button class="tcard on" onclick="openTable(${i})"><div><div class="tlab">${t('tableWord')}</div><div class="tno">${n(i)}</div></div>
+        <div><div class="tamt">${money(osum(o))}</div><div class="trow">${hs?`<span class="tpill">🍽 ${money(hs)}</span>`:''}${bs?`<span class="tpill">🍺 ${money(bs)}</span>`:''}</div><div class="tmeta">⏱ ${elapsed(o)}</div></div></button>`;
+    }else h+=`<button class="tcard free" onclick="openTable(${i})"><div><div class="tlab">${t('tableWord')}</div><div class="tno">${n(i)}</div></div><div class="tlab">✓ ${t('free')}</div></button>`;
+  }
+  setHtml(box,h+'</div>');
+}
+async function openTable(tn){
+  tn=String(tn);
+  if(!FLUSHING&&!DIRTY.size){
+    try{const o=await api('/api/orders/'+encodeURIComponent(tn));ORD[tn]=o.items.length?o:{table_no:tn,customer:'',items:[],created_at:nowStr()}}catch(e){}
+  }
+  TABLE=tn;VIEW='order';Q='';render();window.scrollTo(0,0);
+}
+
+/* =================== ORDER SCREEN =================== */
+function viewOrder(){
+  const o=curOrder();
+  $('view').innerHTML=`<div class="ohead">
+    <button class="btn dark" onclick="go('tables')">${t('backTables')}</button>
+    <div class="otitle">${t('tableWord')} <span>${n(esc(TABLE))}</span></div>
+    <div class="strip" id="strip"></div>
+    <button class="btn cancelT" onclick="cancelTable()">✕ ${t('cancelTable')}</button>
+  </div>
+  <div class="billing">
+   <section class="panel menu sec-${SEC}" id="menuPanel">
+     <div class="secsw" id="secSw"></div>
+     <div class="toolbar"><div class="seg" id="typeSeg"></div>
+       <input class="search" id="search" placeholder="🔍 ${esc(t('search'))}" value="${esc(Q)}" oninput="Q=this.value;renderGrid()"></div>
+     <div class="cats" id="cats"></div>
+     <div class="grid-wrap" id="grid"></div>
+   </section>
+   <aside class="panel cart-pane">
+     <h3>🧾 ${t('cart')} <span class="badge" id="lineCount"></span></h3>
+     <input class="cinput" id="cust" placeholder="${esc(t('customer'))}" value="${esc(o.customer)}" oninput="curOrder().customer=this.value" onchange="persist(TABLE)">
+     <div class="lines" id="lines"></div>
+     <div class="grand tr"><span>${t('total')}</span><b id="grand"></b></div>
+     <div class="acts">
+       <button class="btn pri" onclick="openCheckout()">🧾 ${t('billPrint')}</button></div>
+   </aside></div>`;
+  renderSecSw();renderTypeSeg();renderCats();renderGrid();renderCart();renderStrip();
+}
+function renderStrip(){
+  const run=runningOrders();
+  setHtml($('strip'),run.map(o=>`<button class="chip ${o.table_no===TABLE?'cur':''}" onclick="openTable('${esc(o.table_no)}')"><span class="cn">${n(esc(o.table_no))}</span><span>${money(osum(o))}</span></button>`).join(''));
+}
+function renderSecSw(){
+  $('secSw').innerHTML=SECTIONS.map(s=>`<button class="${s} ${SEC===s?'on':''}" onclick="setSec('${s}')">${secIcon(s)} ${t('sec_'+s)}</button>`).join('');
+  $('menuPanel').className='panel menu sec-'+SEC;
+}
+function setSec(s){SEC=s;CAT=0;FILTER='all';Q='';$('search').value='';renderSecSw();renderTypeSeg();renderCats();renderGrid()}
+function activeItems(){return MENU.items.filter(i=>i.active&&i.section===SEC&&(SEC==='bar'||FILTER==='all'||i.type===FILTER))}
+function renderTypeSeg(){
+  const sg=$('typeSeg');
+  if(SEC==='bar'){sg.style.display='none';return}
+  sg.style.display='';
+  sg.innerHTML=[['all',''],['veg','<span class="dot"></span>'],['nonveg','<span class="dot nonveg"></span>']]
+   .map(([k,ic])=>`<button class="${FILTER===k?'on':''}" onclick="FILTER='${k}';CAT=0;renderTypeSeg();renderCats();renderGrid()">${ic}${t(k)}</button>`).join('');
+}
+function renderCats(){
+  const items=activeItems();
+  const cats=MENU.categories.filter(c=>c.section===SEC&&items.some(i=>i.category_id===c.id));
+  if(CAT&&!cats.some(c=>c.id===CAT))CAT=0;
+  $('cats').innerHTML=`<button class="${CAT===0?'on':''}" onclick="CAT=0;renderCats();renderGrid()">${t('allCats')}</button>`+
+    cats.map(c=>`<button class="${CAT===c.id?'on':''}" onclick="CAT=${c.id};renderCats();renderGrid()">${esc(nm(c))}<small>${n(items.filter(i=>i.category_id===c.id).length)}</small></button>`).join('');
+}
+function renderGrid(){
+  const q=Q.trim().toLowerCase();
+  const all=activeItems();
+  const items=all.filter(i=>(!CAT||i.category_id===CAT)&&(!q||(i.name_mr+' '+i.name_en).toLowerCase().includes(q)));
+  if(!items.length){
+    $('grid').innerHTML=`<div class="empty">${all.length?t('noItems'):(SEC==='bar'?t('menuEmptyBar'):t('noItems'))}${!all.length&&SEC==='bar'?`<br><button class="btn pri" onclick="go('admin')">⚙️ ${t('goAdmin')}</button>`:''}</div>`;return}
+  const groups=MENU.categories.filter(c=>c.section===SEC).map(c=>({c,list:items.filter(i=>i.category_id===c.id)})).filter(g=>g.list.length);
+  $('grid').innerHTML=groups.map(g=>`<div class="ghead">${esc(nm(g.c))}</div><div class="grid">${g.list.map(card).join('')}</div>`).join('');
+}
+function card(it){
+  const single=it.variants.length===1;
+  const head=`<div class="ctop">${it.section==='bar'?'':`<span class="dot ${it.type}"></span>`}<span class="iname">${esc(nm(it))}</span></div>`;
+  if(single){const v=it.variants[0];
+    return `<div class="card click" onclick="addItem(${it.id},0)">${head}<div class="price">${money(v.p)}${vl(v)?` <span class="badge">${esc(vl(v))}</span>`:''}</div></div>`}
+  return `<div class="card">${head}<div class="vars">${it.variants.map((v,i)=>`<button onclick="addItem(${it.id},${i})"><small>${esc(vl(v))}</small><b>${money(v.p)}</b></button>`).join('')}</div></div>`;
+}
+function afterChange(k){renderCart(k);persist(TABLE);renderStrip();updateNavBadge()}
+function addItem(id,vi){
+  const it=MENU.items.find(x=>x.id===id);if(!it)return;const v=it.variants[vi],o=curOrder();
+  let k=o.items.findIndex(l=>l.item_id===id&&(l.vmr||'')===(v.mr||'')&&(l.ven||'')===(v.en||'')&&l.price===Number(v.p));
+  if(k>=0)o.items[k].qty++;
+  else{o.items.push({item_id:id,section:it.section,name_mr:it.name_mr,name_en:it.name_en,vmr:v.mr||'',ven:v.en||'',price:Number(v.p),qty:1});k=o.items.length-1}
+  afterChange(k);
+}
+function chQty(i,d){const o=curOrder(),l=o.items[i];l.qty+=d;if(l.qty<=0)o.items.splice(i,1);afterChange(d>0?i:-1)}
+function rmLine(i){curOrder().items.splice(i,1);afterChange(-1)}
+function chPrice(i,v){
+  const l=curOrder().items[i];l.price=Math.max(0,Number(v)||0);
+  const el=$('lt'+i);if(el)el.textContent=money(l.price*l.qty);
+  renderTotals();persist(TABLE);renderStrip();
+}
+function lineHtml(l,i){
+  return `<div class="line" id="ln${i}">
+    <div class="lname">${esc(nm(l))}${lv(l)?`<small>(${esc(lv(l))})</small>`:''}</div>
+    <div class="lctrl">
+      <button class="qbtn" onclick="chQty(${i},-1)">−</button><span class="qty">${n(l.qty)}</span><button class="qbtn" onclick="chQty(${i},1)">+</button>
+      <span class="muted">× ₹</span><input type="number" min="0" class="pin" value="${l.price}" oninput="chPrice(${i},this.value)" title="${esc(t('price'))}">
+      <span class="ltot" id="lt${i}">${money(l.price*l.qty)}</span>
+      <button class="x" onclick="rmLine(${i})" title="${esc(t('delete'))}">✕</button>
+    </div></div>`;
+}
+function renderCart(fl){
+  const box=$('lines');if(!box)return;const o=curOrder();
+  if(!o.items.length){
+    box.innerHTML=`<div class="empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>${t('empty')}</div>`;
+  }else{
+    box.innerHTML=SECTIONS.map(s=>{
+      const idx=o.items.map((l,i)=>i).filter(i=>o.items[i].section===s);
+      if(!idx.length)return '';
+      return `<div class="lsec ${s}"><span>${secIcon(s)} ${t('sec_'+s)}</span><b id="ls_${s}"></b></div>`+idx.map(i=>lineHtml(o.items[i],i)).join('');
+    }).join('');
+  }
+  renderTotals();
+  const el=fl>=0&&$('ln'+fl);
+  if(el){el.classList.add('flash');
+    const top=el.offsetTop;
+    if(top<box.scrollTop)box.scrollTop=top;
+    else if(top+el.offsetHeight>box.scrollTop+box.clientHeight)box.scrollTop=top+el.offsetHeight-box.clientHeight}
+}
+function renderTotals(){
+  const o=curOrder(),tot=osum(o),cnt=ocount(o);
+  SECTIONS.forEach(s=>{const e=$('ls_'+s);if(e)e.textContent=money(osum(o,s))});
+  if($('grand'))$('grand').textContent=money(tot);
+  if($('lineCount'))$('lineCount').textContent=cnt?n(cnt)+' '+t('itemsN'):'';
+  const f=$('fab');f.textContent='🧾 '+n(cnt)+' • '+money(tot);f.classList.toggle('hide',!cnt||VIEW!=='order');
+}
+function cancelTable(){
+  const o=curOrder();
+  if(o.items.length&&!confirm(t('confirmCancelTable')))return;
+  o.items=[];o.customer='';persist(TABLE);
+  if(o.items.length===0)toast(t('tableCancelled'));
+  VIEW='tables';render();
+}
+
+/* =================== CHECKOUT =================== */
+let CO={disc:{hotel:0,bar:0}};
+async function openCheckout(){
+  const o=curOrder();
+  if(!o.items.length)return toast(t('addSomething'),true);
+  await flushNow();
+  CO={disc:{hotel:0,bar:0}};
+  const secs=SECTIONS.filter(s=>o.items.some(l=>l.section===s));
+  openModal(`<h3>🧾 ${t('finalBill')} — ${t('tableWord')} ${n(esc(TABLE))}</h3>
+   ${secs.length>1?`<div class="note">ℹ️ ${t('sepBills')}</div>`:''}
+   ${secs.map(s=>`<div class="cosec"><div class="lsec ${s}"><span>${secIcon(s)} ${t('sec_'+s)}</span><b>${money(osum(o,s))}</b></div><div class="cob">
+      ${o.items.filter(l=>l.section===s).map(l=>`<div class="corow sm"><span>${esc(nm(l))}${lv(l)?' ('+esc(lv(l))+')':''} × ${n(l.qty)}</span><span>${money(l.price*l.qty)}</span></div>`).join('')}
+      <div class="corow" style="align-items:center;margin-top:6px"><span>${t('discount')}</span><input type="number" min="0" placeholder="0" oninput="coDisc('${s}',this.value)"></div>
+      <div class="corow net"><span>${t('total')}</span><span id="cot_${s}"></span></div></div></div>`).join('')}
+   <div class="grand tr"><span>${t('grand')}</span><b id="coGrand"></b></div>
+   <div class="fld" style="margin-top:10px"><label>${t('datetime')}</label><input type="datetime-local" id="coTime" value="${toLocalInput(new Date())}"></div>
+   <div class="mact"><button class="ghost" onclick="closeModal()">${t('cancel')}</button>
+     <button class="btn pri" onclick="doCheckout()">🖨 ${t('saveprint')}</button></div>`);
+  coTotals();
+}
+function coDisc(s,v){CO.disc[s]=Math.max(0,+v||0);coTotals()}
+function coTotals(){
+  const o=curOrder();let g=0;
+  SECTIONS.forEach(s=>{const sub=osum(o,s);if(!sub&&!o.items.some(l=>l.section===s))return;
+    const net=sub-Math.min(CO.disc[s]||0,sub);g+=net;const e=$('cot_'+s);if(e)e.textContent=money(net)});
+  $('coGrand').textContent=money(g);
+}
+async function doCheckout(){
+  if(SAVING)return;SAVING=true;
+  try{
+    await flushNow();
+    const r=await api('/api/orders/'+encodeURIComponent(TABLE)+'/checkout','POST',
+      {discounts:CO.disc,created_at:($('coTime').value||'').replace('T',' ')});
+    delete ORD[TABLE];closeModal();
+    toast(t('billSaved')+' — '+r.bills.map(b=>t('sec_'+b.section)+' #'+n(b.id)+' '+money(b.total)).join(' • '));
+    printBills(r.bills);
+    VIEW='tables';render();
+  }catch(e){toast(e.message,true)}
+  finally{SAVING=false}
+}
+
+/* =================== PRINT =================== */
+function setPageStyle(){
+  const p=SETTINGS.paper||'80';
+  $('pageStyle').textContent=p==='a4'?'@page{size:A4;margin:12mm}.rcpt{width:90mm;font-size:13px}':
+    `@page{size:${p}mm auto;margin:2mm}.rcpt{width:${p-4}mm}`+(p==='58'?'.rcpt{font-size:11px}.rcpt .rh{font-size:16px}':'');
+}
+function printReceipts(list){
+  $('printArea').innerHTML=list.join('');
+  setPageStyle();
+  setTimeout(()=>window.print(),200);
+}
+function rcptTop(title){
+  const g=k=>SETTINGS[k+'_'+LANG]||SETTINGS[k+'_mr']||SETTINGS[k+'_en']||'';
+  return `<div class="rh">${esc(g('hotel'))}</div>
+    ${g('tag')?`<div class="rt">${esc(g('tag'))}</div>`:''}
+    ${g('addr')?`<div class="rc">${esc(g('addr'))}</div>`:''}
+    ${SETTINGS.phone?`<div class="rc">${t('phoneShort')}: ${n(esc(SETTINGS.phone))}</div>`:''}
+    ${SETTINGS.gstin?`<div class="rc">GSTIN: ${esc(SETTINGS.gstin)}</div>`:''}
+    <div class="rs">${esc(title)}</div>`;
+}
+function rcptFoot(){return `<div class="rl"></div><div class="rf">${esc(SETTINGS['footer_'+LANG]||SETTINGS.footer_mr||SETTINGS.footer_en||'')}</div>`}
+function billReceipt(b){
+  const d=parseDT(b.created_at);
+  const rows=b.items.map(l=>`<tr><td>${esc(nm(l))}${lv(l)?` <span>(${esc(lv(l))})</span>`:''}</td><td class="c">${n(l.qty)}</td><td class="r">${n(fmt(l.price))}</td><td class="r">${n(fmt(l.price*l.qty))}</td></tr>`).join('');
+  return `<div class="rcpt">${rcptTop(t('billTitle_'+b.section))}
+    <div class="rl"></div>
+    <div class="rm"><span>${t('billno')}: <b>${n(b.id)}</b></span><span>${t('table')}: <b>${n(esc(b.table_no||'-'))}</b></span></div>
+    <div class="rm"><span>${t('date')}: ${fmtDate(d)}</span><span>${fmtTime(d)}</span></div>
+    ${b.customer?`<div class="rm"><span>${t('customer')}: ${esc(b.customer)}</span></div>`:''}
+    <div class="rl"></div>
+    <table><thead><tr><th>${t('item')}</th><th class="c">${t('qty')}</th><th class="r">${t('price')}</th><th class="r">${t('amount')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="rl"></div>
+    <div class="rm"><span>${t('subtotal')}</span><span>${money(b.subtotal)}</span></div>
+    ${b.discount>0?`<div class="rm"><span>${t('discount')}</span><span>- ${money(b.discount)}</span></div>`:''}
+    <div class="rtot"><span>${t('grand')}</span><span>${money(b.total)}</span></div>
+    ${rcptFoot()}</div>`;
+}
+function printBills(list){printReceipts(list.map(billReceipt))}
+function dayReceipt(s,x,date){
+  const d=parseDT(date+' 00:00');
+  const rows=x.items.map(l=>`<tr><td>${esc(nm(l))}${lv(l)?` <span>(${esc(lv(l))})</span>`:''}</td><td class="c">${n(l.qty)}</td><td class="r">${n(fmt(l.price))}</td><td class="r">${n(fmt(l.amount))}</td></tr>`).join('');
+  return `<div class="rcpt">${rcptTop(t('dayTitle_'+s))}
+    <div class="rl"></div>
+    <div class="rm"><span>${t('date')}: <b>${fmtDate(d)}</b></span><span>${DAYS[LANG][d.getDay()]}</span></div>
+    <div class="rm"><span>${t('billcount')}: <b>${n(x.count)}</b></span></div>
+    <div class="rl"></div>
+    <table><thead><tr><th>${t('item')}</th><th class="c">${t('qty')}</th><th class="r">${t('price')}</th><th class="r">${t('amount')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="rl"></div>
+    <div class="rm"><span>${t('subtotal')}</span><span>${money(x.subtotal)}</span></div>
+    ${x.discount>0?`<div class="rm"><span>${t('discount')}</span><span>- ${money(x.discount)}</span></div>`:''}
+    <div class="rtot"><span>${t('grand')}</span><span>${money(x.total)}</span></div>
+    ${rcptFoot()}</div>`;
+}
+function printDay(s){if(DAYREP)printReceipts([dayReceipt(s,DAYREP.sections[s],DAYDATE)])}
+
+/* =================== REPORTS =================== */
+let DAYDATE='';
+function statCards(d){return `<div class="stats">
+  <div class="stat s1"><span>💰 ${t('revenue')}</span><b>${money(d.total)}</b></div>
+  <div class="stat s2"><span>🍽 ${t('sec_hotel')}</span><b>${money(d.hotel)}</b></div>
+  <div class="stat s3"><span>🍺 ${t('sec_bar')}</span><b>${money(d.bar)}</b></div>
+  <div class="stat s4"><span>🧾 ${t('billcount')}</span><b>${n(d.count)}</b></div></div>`}
+function viewReports(){
+  $('view').innerHTML=`<div class="rep">
+   <section class="panel"><div class="ph"><h2>📅 ${t('daily')}</h2><input type="date" id="rDate" value="${DAYDATE||todayStr()}" onchange="loadDay()"></div><div id="dayBox"></div></section>
+   <section class="panel"><div class="ph"><h2>🗓 ${t('monthly')}</h2><input type="month" id="rMonth" value="${monthStr()}" onchange="loadMonth()"></div><div id="monthBox"></div></section>
+   <section class="panel"><div class="ph"><h2>⬇ ${t('download')}</h2>
+     <select id="dlSec"><option value="all">${t('all')}</option><option value="hotel">🍽 ${t('sec_hotel')}</option><option value="bar">🍺 ${t('sec_bar')}</option></select></div>
+     <div class="dl">
+      <div class="dlbox"><h4>📆 ${t('yearly')}</h4>
+        <div class="dlrow"><label>${t('yearW')}<input type="number" id="dlYear" min="2000" max="2100" value="${new Date().getFullYear()}"></label></div>
+        <div class="dlbtns"><button class="btn pri" onclick="dlYear('bills')">⬇ ${t('dlBills')}</button><button class="btn dark" onclick="dlYear('summary')">⬇ ${t('dlSummary')}</button></div></div>
+      <div class="dlbox"><h4>🗓 ${t('monthToMonth')}</h4>
+        <div class="dlrow"><label>${t('dlFrom')}<input type="month" id="dlFrom" value="${monthStr()}"></label><label>${t('dlTo')}<input type="month" id="dlTo" value="${monthStr()}"></label></div>
+        <div class="dlbtns"><button class="btn pri" onclick="dlRange('bills')">⬇ ${t('dlBills')}</button><button class="btn dark" onclick="dlRange('summary')">⬇ ${t('dlSummary')}</button></div></div>
+     </div></section></div>`;
+  loadDay();loadMonth();
+}
+function secBillCard(s,x){
+  const body=x.count?`<div class="sbmini"><span>🧾 ${t('billcount')}: <b>${n(x.count)}</b></span></div>
+    <div class="sbscroll"><table class="tbl"><thead><tr><th>${t('item')}</th><th class="r">${t('qty')}</th><th class="r">${t('price')}</th><th class="r">${t('amount')}</th></tr></thead><tbody>${
+      x.items.map(l=>`<tr><td>${esc(nm(l))}${lv(l)?` <span class="badge">${esc(lv(l))}</span>`:''}</td><td class="r">${n(l.qty)}</td><td class="r">${n(fmt(l.price))}</td><td class="r"><b>${money(l.amount)}</b></td></tr>`).join('')}</tbody></table></div>
+    ${x.discount>0?`<div class="tr muted" style="margin-top:6px"><span>${t('discount')}</span><span>- ${money(x.discount)}</span></div>`:''}
+    <div class="sbtot"><span>${t('grand')}</span><b>${money(x.total)}</b></div>`
+    :`<p class="muted" style="text-align:center;padding:18px 0">${t('nodata')}</p>`;
+  return `<div class="secbill ${s}"><div class="sbh"><h3>${secIcon(s)} ${t('sec_'+s)} — ${t('dayBill')}</h3>
+    <button class="btn" ${x.count?'':'disabled'} onclick="printDay('${s}')">🖨 ${t('printDay')}</button></div><div class="sbb">${body}</div></div>`;
+}
+async function loadDay(){
+  DAYDATE=$('rDate').value;
+  try{const d=await api('/api/report/day?date='+DAYDATE);DAYREP=d;
+    $('dayBox').innerHTML=statCards(d)+`<div class="twocol" style="margin-top:14px">${SECTIONS.map(s=>secBillCard(s,d.sections[s])).join('')}</div>`;
+  }catch(e){toast(e.message,true)}
+}
+async function dlGo(from,to,kind){
+  const sc=$('dlSec').value;
+  try{
+    const r=await fetch('/api/export?from='+from+'&to='+to+'&kind='+kind+(sc!=='all'?'&section='+sc:''),{headers:{Authorization:'Bearer '+TOKEN}});
+    if(!r.ok){let j={};try{j=await r.json()}catch(e){}throw new Error(j.error||('Error '+r.status))}
+    const m=/filename="([^"]+)"/.exec(r.headers.get('Content-Disposition')||'');
+    const a=document.createElement('a');a.href=URL.createObjectURL(await r.blob());a.download=m?m[1]:'akshara.csv';
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){toast(e.message,true)}
+}
+function dlYear(kind){const y=+$('dlYear').value;if(!(y>=2000&&y<=2100))return toast(t('wrongYear'),true);dlGo(y+'-01',y+'-12',kind)}
+function dlRange(kind){const f=$('dlFrom').value,to=$('dlTo').value;if(!f||!to)return toast(t('pickMonths'),true);dlGo(f,to,kind)}
+async function loadMonth(){
+  const m=$('rMonth').value;
+  try{const d=await api('/api/report/month?month='+m);const mx=Math.max(1,...d.days.map(x=>x.total));
+    $('monthBox').innerHTML=statCards(d)+(d.days.length?`<div class="tblwrap"><table class="tbl"><thead><tr><th>${t('date')}</th><th class="r">${t('billcount')}</th><th class="r">🍽 ${t('sec_hotel')}</th><th class="r">🍺 ${t('sec_bar')}</th><th class="r">${t('revenue')}</th><th style="width:22%"></th></tr></thead><tbody>${
+      d.days.map(x=>`<tr style="cursor:pointer" onclick="DAYDATE='${x.date}';go('reports')" title="${esc(t('viewDay'))}"><td>${fmtDay(x.date)}</td><td class="r">${n(x.count)}</td><td class="r">${money(x.hotel)}</td><td class="r">${money(x.bar)}</td><td class="r"><b>${money(x.total)}</b></td><td><div class="mbar" style="width:${(x.total/mx*100).toFixed(1)}%"></div></td></tr>`).join('')}</tbody></table></div>`:`<p class="muted" style="text-align:center">${t('nodata')}</p>`);
+  }catch(e){toast(e.message,true)}
+}
+
+/* =================== BILL HISTORY =================== */
+function viewBills(){
+  $('view').innerHTML=`<section class="panel"><div class="ph"><h2>📋 ${t('bills')}</h2>
+    <div class="seg2">${['all','hotel','bar'].map(k=>`<button class="${BSEC===k?'on':''}" onclick="BSEC='${k}';viewBills()">${k==='all'?t('all'):secIcon(k)+' '+t('sec_'+k)}</button>`).join('')}</div>
+    <input type="date" id="bDate" value="${BDATE||todayStr()}" onchange="BDATE=this.value;loadBills()"></div><div id="billsBox"></div></section>`;
+  loadBills();
+}
+async function loadBills(){
+  try{BILLS=await api('/api/bills?date='+$('bDate').value);
+    const list=BILLS.filter(b=>BSEC==='all'||b.section===BSEC);
+    if(!list.length){$('billsBox').innerHTML=`<p class="muted" style="text-align:center;padding:20px">${t('nodata')}</p>`;return}
+    const tot=list.reduce((s,b)=>s+b.total,0);
+    $('billsBox').innerHTML=`<div class="tblwrap"><table class="tbl"><thead><tr><th>${t('billno')}</th><th>${t('time')}</th><th>${t('table')}</th><th>${t('sectionW')}</th><th>${t('items')}</th><th class="r">${t('total')}</th><th class="r">${t('actions')}</th></tr></thead><tbody>${
+      list.map(b=>`<tr><td><b>#${n(b.id)}</b></td><td>${fmtTime(parseDT(b.created_at))}</td><td>${n(esc(b.table_no||'-'))}${b.customer?`<br><small class="muted">${esc(b.customer)}</small>`:''}</td>
+        <td><span class="sbadge ${b.section}">${secIcon(b.section)} ${t('sec_'+b.section)}</span></td>
+        <td><small>${b.items.map(l=>esc(nm(l))+(lv(l)?' ('+esc(lv(l))+')':'')+' ×'+n(l.qty)).join(', ')}</small></td>
+        <td class="r"><b>${money(b.total)}</b></td>
+        <td class="r" style="white-space:nowrap"><button class="icon" onclick="printBills([BILLS.find(x=>x.id===${b.id})])">${t('reprint')}</button><button class="icon danger" onclick="delBill(${b.id})">🗑</button></td></tr>`).join('')}
+      <tr><td colspan="5" class="r"><b>${t('revenue')}</b></td><td class="r"><b style="color:var(--mar);font-size:18px">${money(tot)}</b></td><td></td></tr></tbody></table></div>`;
+  }catch(e){toast(e.message,true)}
+}
+async function ensurePin(){
+  if(PIN)return true;
+  const p=prompt(t('pin'));if(!p)return false;
+  try{await api('/api/login','POST',{pin:p});PIN=p;try{sessionStorage.setItem('ak_pin',p)}catch(e){};return true}
+  catch(e){toast(t('wrongpin'),true);return false}
+}
+async function delBill(id){
+  if(!confirm(t('confirmDel')+' #'+n(id)))return;
+  if(!await ensurePin())return;
+  const bb=BILLS.find(x=>x.id===id);
+  try{await api('/api/bills/'+id+'?date='+(bb?bb.created_at.slice(0,10):''),'DELETE');toast(t('deleted'));loadBills()}catch(e){toast(e.message,true)}
+}
+
+/* =================== ADMIN =================== */
+function viewAdmin(){
+  if(!PIN){
+    $('view').innerHTML=`<section class="panel login"><h2 style="color:var(--mar);margin:0">🔐 ${t('signIn')}</h2>
+      <input type="password" id="pinIn" inputmode="numeric" placeholder="••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn pri" onclick="doLogin()">${t('login')}</button><p class="muted" style="margin:0">${t('pinHint')}</p></section>`;
+    setTimeout(()=>$('pinIn')&&$('pinIn').focus(),50);return;
+  }
+  $('view').innerHTML=`<div class="atabs">${['menuitems','categories','settings'].map(k=>`<button class="${ATAB===k?'on':''}" onclick="ATAB='${k}';viewAdmin()">${t(k)}</button>`).join('')}
+    <button class="ghost" onclick="logout()">🚪 ${t('logout')}</button></div><section class="panel" id="adminBox"></section>`;
+  if(ATAB==='menuitems')adminItems();else if(ATAB==='categories')adminCats();else adminSettings();
+}
+async function doLogin(){
+  const p=$('pinIn').value;
+  try{await api('/api/login','POST',{pin:p});PIN=p;try{sessionStorage.setItem('ak_pin',p)}catch(e){};viewAdmin()}
+  catch(e){toast(t('wrongpin'),true)}
+}
+function logout(){PIN='';try{sessionStorage.removeItem('ak_pin')}catch(e){};viewAdmin()}
+async function reloadMenu(){MENU=await api('/api/menu')}
+
+function adminItems(){
+  const cats=MENU.categories.filter(c=>ASEC==='all'||c.section===ASEC);
+  if(ACAT&&!cats.some(c=>c.id===ACAT))ACAT=0;
+  $('adminBox').innerHTML=`<div class="ph"><h2>${t('menuitems')}</h2>
+    <div class="seg2">${['all','hotel','bar'].map(k=>`<button class="${ASEC===k?'on':''}" onclick="ASEC='${k}';ACAT=0;adminItems()">${k==='all'?t('all'):secIcon(k)+' '+t('sec_'+k)}</button>`).join('')}</div>
+    <select onchange="ACAT=+this.value;adminItemsTable()"><option value="0">${t('allCats')}</option>${cats.map(c=>`<option value="${c.id}" ${ACAT===c.id?'selected':''}>${esc(nm(c))}</option>`).join('')}</select>
+    <input placeholder="🔍 ${esc(t('search'))}" value="${esc(AQ)}" oninput="AQ=this.value;adminItemsTable()">
+    <button class="btn pri" onclick="editItem(0)">${t('additem')}</button></div><div class="tblwrap" id="aTable"></div>`;
+  adminItemsTable();
+}
+function adminItemsTable(){
+  const q=AQ.trim().toLowerCase();
+  const items=MENU.items.filter(i=>(ASEC==='all'||i.section===ASEC)&&(!ACAT||i.category_id===ACAT)&&(!q||(i.name_mr+' '+i.name_en).toLowerCase().includes(q)));
+  $('aTable').innerHTML=items.length?`<table class="tbl"><thead><tr><th></th><th>${t('name_mr')}</th><th>${t('name_en')}</th><th>${t('category')}</th><th>${t('variants')}</th><th>${t('active')}</th><th class="r">${t('actions')}</th></tr></thead><tbody>${
+    items.map(i=>`<tr style="${i.active?'':'opacity:.5'}"><td><span class="dot ${i.type}"></span></td><td><b>${esc(i.name_mr)}</b></td><td>${esc(i.name_en)}</td><td><span class="sbadge ${i.section}">${secIcon(i.section)}</span> <small>${esc(catName(i.category_id))}</small></td>
+      <td>${i.variants.map(v=>(vl(v)?`<span class="badge">${esc(vl(v))}</span> `:'')+'<b>'+money(v.p)+'</b>').join(' &nbsp; ')}</td>
+      <td><label class="switch"><input type="checkbox" ${i.active?'checked':''} onchange="toggleActive(${i.id},this.checked)"><span></span></label></td>
+      <td class="r" style="white-space:nowrap"><button class="icon" onclick="editItem(${i.id})">✏️ ${t('edit')}</button><button class="icon danger" onclick="delItem(${i.id})">🗑</button></td></tr>`).join('')}</tbody></table>`:`<p class="muted" style="text-align:center">${t('noItems')}</p>`;
+}
+async function toggleActive(id,on){
+  const it=MENU.items.find(x=>x.id===id);
+  try{await api('/api/items/'+id,'PUT',{...it,active:on?1:0});await reloadMenu();adminItemsTable();toast(t('saved'))}catch(e){toast(e.message,true)}
+}
+async function delItem(id){
+  if(!confirm(t('confirmDel')))return;
+  try{await api('/api/items/'+id,'DELETE');await reloadMenu();adminItemsTable();toast(t('deleted'))}catch(e){toast(e.message,true)}
+}
+function editItem(id){
+  if(!MENU.categories.length){toast(t('addcat'),true);return}
+  const it=id?MENU.items.find(x=>x.id===id):{name_mr:'',name_en:'',category_id:ACAT||(MENU.categories.find(c=>ASEC==='all'||c.section===ASEC)||MENU.categories[0]).id,type:'veg',variants:[{mr:'',en:'',p:''}],active:1};
+  EDIT_VARS=JSON.parse(JSON.stringify(it.variants));
+  openModal(`<h3>${id?'✏️ '+t('edit'):t('additem')}</h3>
+   <div class="form">
+    <label>${t('name_mr')}<input id="fMr" value="${esc(it.name_mr)}"></label>
+    <label>${t('name_en')}<input id="fEn" value="${esc(it.name_en)}"></label>
+    <label>${t('category')}<select id="fCat">${MENU.categories.map(c=>`<option value="${c.id}" ${c.id===it.category_id?'selected':''}>${secIcon(c.section)} ${esc(nm(c))}</option>`).join('')}</select></label>
+    <label>${t('type')}<select id="fType"><option value="veg" ${it.type==='veg'?'selected':''}>🟢 ${t('veg')}</option><option value="nonveg" ${it.type==='nonveg'?'selected':''}>🔴 ${t('nonveg')}</option></select></label>
+    <label class="chk full"><input type="checkbox" id="fAct" ${it.active?'checked':''}> ${t('active')}</label>
+   </div>
+   <h4>${t('variants')}</h4>
+   <div class="presets"><button onclick="preset('s')">${t('single')}</button><button onclick="preset('hf')">${t('hf')}</button><button onclick="preset('phf')">${t('phf')}</button><button onclick="preset('sb')">${t('sb')}</button></div>
+   <div class="vrow muted" style="font-size:12px;font-weight:700"><span>${t('label_mr')}</span><span>${t('label_en')}</span><span>${t('price')} (₹)</span><span></span></div>
+   <div id="varRows"></div>
+   <button class="ghost" onclick="EDIT_VARS.push({mr:'',en:'',p:''});renderVars()">${t('addvariant')}</button>
+   <div class="mact"><button class="ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn pri" onclick="saveItem(${id})">💾 ${t('saveBtn')}</button></div>`);
+  renderVars();
+}
+function preset(k){
+  const L={s:[['','']],hf:[['हाफ','Half'],['फुल','Full']],phf:[['प्लेट','Plate'],['हाफ','Half'],['फुल','Full']],sb:[['छोटी','Small'],['मोठी','Big']]}[k];
+  EDIT_VARS=L.map((l,i)=>({mr:l[0],en:l[1],p:EDIT_VARS[i]?EDIT_VARS[i].p:''}));renderVars();
+}
+function renderVars(){
+  $('varRows').innerHTML=EDIT_VARS.map((v,i)=>`<div class="vrow">
+    <input value="${esc(v.mr)}" placeholder="—" oninput="EDIT_VARS[${i}].mr=this.value">
+    <input value="${esc(v.en)}" placeholder="—" oninput="EDIT_VARS[${i}].en=this.value">
+    <input type="number" min="0" value="${v.p}" placeholder="0" oninput="EDIT_VARS[${i}].p=this.value">
+    <button class="icon danger" ${EDIT_VARS.length<2?'disabled':''} onclick="EDIT_VARS.splice(${i},1);renderVars()">✕</button></div>`).join('');
+}
+async function saveItem(id){
+  const body={name_mr:$('fMr').value.trim(),name_en:$('fEn').value.trim(),category_id:+$('fCat').value,type:$('fType').value,active:$('fAct').checked?1:0,
+    variants:EDIT_VARS.filter(v=>v.p!==''&&v.p!==null).map(v=>({mr:v.mr,en:v.en,p:Number(v.p)}))};
+  if(!body.name_mr&&!body.name_en)return toast(t('nameRequired'),true);
+  try{await api(id?'/api/items/'+id:'/api/items',id?'PUT':'POST',body);await reloadMenu();closeModal();adminItemsTable();toast(t('saved'))}catch(e){toast(e.message,true)}
+}
+
+function adminCats(){
+  $('adminBox').innerHTML=`<div class="ph"><h2>${t('categories')}</h2><button class="btn pri" onclick="addCat()">${t('addcat')}</button></div>
+   <div class="tblwrap"><table class="tbl"><thead><tr><th>${t('name_mr')}</th><th>${t('name_en')}</th><th style="width:130px">${t('sectionW')}</th><th style="width:90px">${t('sort')}</th><th class="r">${t('items')}</th><th class="r">${t('actions')}</th></tr></thead><tbody>${
+    MENU.categories.map(c=>`<tr><td><input class="ci" id="cm${c.id}" value="${esc(c.name_mr)}"></td><td><input class="ci" id="ce${c.id}" value="${esc(c.name_en)}"></td>
+     <td><select class="ci" id="csec${c.id}">${SECTIONS.map(x=>`<option value="${x}" ${c.section===x?'selected':''}>${secIcon(x)} ${t('sec_'+x)}</option>`).join('')}</select></td>
+     <td><input class="ci" type="number" id="cs${c.id}" value="${c.sort}"></td><td class="r">${n(MENU.items.filter(i=>i.category_id===c.id).length)}</td>
+     <td class="r" style="white-space:nowrap"><button class="icon" onclick="saveCat(${c.id})">💾 ${t('saveBtn')}</button><button class="icon danger" onclick="delCat(${c.id})">🗑</button></td></tr>`).join('')}</tbody></table></div>`;
+}
+function addCat(){
+  openModal(`<h3>${t('addcat')}</h3><div class="form"><label>${t('name_mr')}<input id="ncm"></label><label>${t('name_en')}<input id="nce"></label>
+   <label>${t('sectionW')}<select id="ncsec">${SECTIONS.map(x=>`<option value="${x}" ${ASEC===x?'selected':''}>${secIcon(x)} ${t('sec_'+x)}</option>`).join('')}</select></label>
+   <label>${t('sort')}<input type="number" id="ncs" value="${(Math.max(0,...MENU.categories.map(c=>c.sort))+10)}"></label></div>
+   <div class="mact"><button class="ghost" onclick="closeModal()">${t('cancel')}</button><button class="btn pri" onclick="saveCat(0)">💾 ${t('saveBtn')}</button></div>`);
+}
+async function saveCat(id){
+  const body=id?{name_mr:$('cm'+id).value,name_en:$('ce'+id).value,sort:+$('cs'+id).value,section:$('csec'+id).value}:{name_mr:$('ncm').value,name_en:$('nce').value,sort:+$('ncs').value,section:$('ncsec').value};
+  try{await api(id?'/api/categories/'+id:'/api/categories',id?'PUT':'POST',body);await reloadMenu();closeModal();adminCats();toast(t('saved'))}catch(e){toast(e.message,true)}
+}
+async function delCat(id){
+  if(!confirm(t('confirmCatDel')))return;
+  try{await api('/api/categories/'+id,'DELETE');await reloadMenu();adminCats();toast(t('deleted'))}catch(e){toast(e.message,true)}
+}
+
+function adminSettings(){
+  const f=k=>`<label>${t(k)}<input id="s_${k}" value="${esc(SETTINGS[k]||'')}"></label>`;
+  $('adminBox').innerHTML=`<div class="ph"><h2>${t('settings')}</h2></div>
+   <div class="form">${['hotel_mr','hotel_en','tag_mr','tag_en','addr_mr','addr_en','phone','gstin','footer_mr','footer_en'].map(f).join('')}
+    <label>${t('table_count')}<input id="s_table_count" type="number" min="1" max="99" value="${esc(SETTINGS.table_count||15)}"></label>
+    <label>${t('paper')}<select id="s_paper">${[['58','58 mm'],['80','80 mm'],['a4',t('a4')]].map(([v,l])=>`<option value="${v}" ${SETTINGS.paper===v?'selected':''}>${l}</option>`).join('')}</select></label>
+    <label>${t('newpin')}<input id="s_pin" type="password" inputmode="numeric" placeholder="••••"></label>
+    <label>${t('newpw')}<input id="s_pw" type="password" autocomplete="new-password" placeholder="••••••"></label>
+    <p class="muted full" style="margin:0">💡 ${t('printTip')}</p>
+   </div>
+   <div class="mact"><button class="btn pri" onclick="saveSettings()">💾 ${t('saveBtn')}</button></div>
+   <h4 style="margin-top:22px">📥 ${t('importTitle')}</h4><p class="muted" style="margin:0 0 8px">${t('importHelp')}</p>
+   <div class="dlrow"><input type="file" id="impFile" accept=".json,application/json"><button class="btn dark" onclick="importData()">${t('importBtn')}</button></div>`;
+}
+async function importData(){
+  const f=$('impFile').files[0];if(!f)return toast(t('pickFile'),true);
+  let obj;try{obj=JSON.parse(await f.text())}catch(e){return toast(t('badFile'),true)}
+  if(!confirm(t('importConfirm')))return;
+  try{const r=await api('/api/import','POST',obj);await loadAll();toast(t('importDone')+': '+n(r.items)+' / '+n(r.bills));render()}catch(e){toast(e.message,true)}
+}
+async function saveSettings(){
+  const body={};['hotel_mr','hotel_en','tag_mr','tag_en','addr_mr','addr_en','phone','gstin','footer_mr','footer_en','paper','table_count'].forEach(k=>body[k]=$('s_'+k).value);
+  const np=$('s_pin').value.trim();if(np)body.new_pin=np;
+  const npw=$('s_pw').value.trim();if(npw)body.new_password=npw;
+  try{SETTINGS=await api('/api/settings','PUT',body);
+    if(SETTINGS.token){setToken(SETTINGS.token);delete SETTINGS.token}
+    if(np){PIN=np;try{sessionStorage.setItem('ak_pin',np)}catch(e){};toast(t('pinChanged'))}else if(npw)toast(t('pwChanged'));else toast(t('settingsSaved'));
+    render();
+  }catch(e){toast(e.message,true)}
+}
+
+/* =================== START =================== */
+let STARTED=false;
+async function boot(){
+  try{await loadAll()}catch(e){if(!TOKEN)return;toast(e.message,true)}
+  await pollOrders();
+  render();
+  if(STARTED)return;STARTED=true;
+  setInterval(tickDay,30000);
+  // light polling (every 20 s, only while the screen is visible) keeps serverless usage low
+  setInterval(()=>{if(!document.hidden&&TOKEN)pollOrders()},20000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&TOKEN)pollOrders()});
+  setInterval(()=>{if(VIEW==='tables')renderTablesBody()},30000);
+}
+(function(){if(!TOKEN){showLock();return}boot()})();
+</script>
+</body>
+</html>

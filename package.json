@@ -1,0 +1,13 @@
+{
+  "name": "hotel-akshara-billing",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hotel Akshara billing - static site + Netlify Function + Netlify Blobs",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.3"
+  },
+  "scripts": {
+    "dev": "node tools/dev-server.mjs"
+  }
+}
